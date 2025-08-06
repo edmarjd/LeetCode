@@ -1,35 +1,26 @@
-# ===================================================================
-# Makefile Definitivo para Projetos LeetCode
-# Autor: Seu Assistente Gemini :)
-# Data: 06/08/2025
-# ===================================================================
+# Makefile para compilar um programa de teste com seu código LeetCode
 
-# Define o compilador
+# --- PERSONALIZE AQUI ---
+# O nome do programa de teste que vamos gerar
+TARGET = programa_teste
+
+# Os arquivos fonte que formam o programa: o seu teste + o seu código LeetCode
+SRCS = teste_739.c 739.c
+# ------------------------
+
 CC = gcc
+CFLAGS = -g -O0 -Wall -mconsole
+OBJS = $(SRCS:.c=.o)
 
-# Define as flags de compilação. -g é essencial para o GDB.
-CFLAGS = -g -O0 -Wall -I.
+# Regra principal: para criar o programa, precisa dos arquivos objeto
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# --- Nenhuma personalização é necessária abaixo desta linha ---
+# Regra para compilar cada .c em um .o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Regra de Padrão "Mágica"
-# Ensina o 'make' a criar um executável (ex: '538c') a partir
-# de um arquivo fonte (ex: '538c.c').
-%: %.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-# Alvo para depurar um arquivo específico com GDB
-# Como usar: mingw32-make gdb FILE=nome_do_arquivo_sem_c
-# Exemplo:  mingw32-make gdb FILE=538c
-gdb:
-	@echo "--- Garantindo que o arquivo '$(FILE)' esta compilado... ---"
-	@$(MAKE) $(FILE)
-	@echo "--- Iniciando GDB para o arquivo '$(FILE)'... ---"
-	@gdb ./$(FILE)
-
-# Alvo para Limpeza do Projeto
-.PHONY: clean gdb
+# Alvo para limpeza
+.PHONY: clean
 clean:
-	@echo "Limpando arquivos gerados..."
-	rm -f *.o *.exe
-	@echo "Limpeza concluída."
+	rm -f *.o *.exe $(TARGET)
