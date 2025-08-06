@@ -1,6 +1,4 @@
-# Makefile de Teste Mínimo
+# Makefile de Teste Final
 
-# Para compilar, digite: mingw32-make 538c
-
-538c: 538c.c
-	gcc -g -Wall -o 538c 538c.c
+teste: teste.c
+	gcc -g -Wall -o teste teste.c
