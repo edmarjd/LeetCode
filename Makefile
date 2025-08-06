@@ -19,21 +19,14 @@ CFLAGS = -g -O0 -Wall -I.
 # -----------------------------------------------------
 # Esta é a parte mais importante. Ela ensina ao 'make' como criar um
 # executável a partir de um arquivo .c de mesmo nome.
-# Exemplo: Se você pedir "make 538c", ele usará esta regra para
-#          compilar o arquivo "538c.c" e gerar o executável "538c".
-#
-# $@ representa o nome do alvo (ex: "538c").
-# $< representa o primeiro pré-requisito (ex: "538c.c").
+# Ex: para criar '538c', ele usará o arquivo "538c.c"
 %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 # Alvo para Limpeza do Projeto
 # -----------------------------
-# Um alvo "PHONY" é um alvo que não representa um arquivo real.
-# Executar "make clean" irá apagar os arquivos gerados pela compilação.
 .PHONY: clean
 clean:
 	@echo "Limpando arquivos gerados..."
-	rm -f *.o
-	rm -f *.exe
+	rm -f *.o *.exe
 	@echo "Limpeza concluída."
