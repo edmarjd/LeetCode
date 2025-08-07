@@ -1,35 +1,27 @@
 # ===================================================================
-# Makefile Definitivo e Automatizado para Múltiplos Testes
-# ===================================================================
-# Como usar:
-# 1. Para compilar e depurar 'XYZ.c', crie um arquivo 'teste_XYZ.c' com uma main().
-# 2. Compile e execute o GDB com um único comando:
-#    mingw32-make debug FILE=XYZ
+# Makefile Final - Otimizado para VS Code e Linha de Comando
 # ===================================================================
 
-# Configurações Gerais
 CC = gcc
 CFLAGS = -g -O0 -Wall -mconsole
 
-# --- Nenhuma personalização é necessária abaixo desta linha ---
+# Alvo para compilar um programa de teste. Só compila, não executa.
+# Usado pelo VS Code antes de depurar.
+# Ex: mingw32-make build FILE=739
+build:
+	@if [ -z "$(FILE)" ]; then echo "ERRO: Especifique o arquivo. Ex: make build FILE=739"; exit 1; fi
+	@echo "--- Compilando 'teste_$(FILE).c' + '$(FILE).c' ---"
+	$(CC) $(CFLAGS) -o $(FILE)_teste.exe teste_$(FILE).c
 
-# Alvo principal para depuração. Este é o comando que você vai usar!
-# Ele espera que você passe o nome do arquivo base. Ex: FILE=739
-debug:
-	@# Verifica se a variável FILE foi passada
-	@if [ -z "$(FILE)" ]; then \
-		echo "ERRO: Especifique o arquivo a ser depurado. Exemplo: mingw32-make debug FILE=739"; \
-		exit 1; \
-	fi
-	@echo "--- Compilando o programa de teste para $(FILE).c ---"
-	$(CC) $(CFLAGS) -o $(FILE)_teste teste_$(FILE).c
-	@echo "--- Compilação concluída. Iniciando GDB... ---"
-	gdb ./$(FILE)_teste
+# Alvo para iniciar o GDB pela linha de comando (opcional)
+# Ex: mingw32-make gdb FILE=739
+gdb: build
+	@echo "--- Iniciando GDB para o arquivo '$(FILE)_teste.exe'... ---"
+	@gdb ./$(FILE)_teste.exe
 
-# Alvo para Limpeza do Projeto
-# Apaga todos os executáveis de teste e arquivos objeto
-.PHONY: clean debug
+# Alvo de limpeza
+.PHONY: clean build gdb
 clean:
 	@echo "Limpando arquivos gerados..."
-	rm -f *.o *_teste.exe *_teste
+	rm -f *.o *_teste.exe
 	@echo "Limpeza concluída."
