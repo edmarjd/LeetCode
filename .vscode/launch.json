@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Depurar Problema LeetCode (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/${input:problemName}_teste.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build para Depuração (Makefile)"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "problemName",
+            "type": "promptString",
+            "description": "Digite o nome do problema para depurar (ex: 739, RomanToInteger)"
+        }
+    ]
+}

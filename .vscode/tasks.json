@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build para Depuração (Makefile)",
+            "type": "shell",
+            "command": "mingw32-make",
+            "args": [
+                "build",
+                "FILE=${input:problemName}"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
